@@ -21,6 +21,7 @@ int main(void)
 {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(800, 600, "Game Of Life");
+    SetWindowMinSize(300, 200);
 
     Camera2D game_camera = {};
 
@@ -34,16 +35,27 @@ int main(void)
 
     std::unique_ptr<game_data> data = std::make_unique<game_data>();
     data->paused = true;
+    data->show_grid = true;
     data->generations = 0;
 
     Cells cells = Cells();
-    cells.alive.push_back((Vector2) { 49, 49});
+
+    // Default positions
+    cells.alive.push_back((Vector2) { 49, 49 });
+    cells.alive.push_back((Vector2) { 50, 49 });
     cells.alive.push_back((Vector2) { 50, 50 });
     cells.alive.push_back((Vector2) { 48, 51 });
     cells.alive.push_back((Vector2) { 49, 51 });
     cells.alive.push_back((Vector2) { 50, 51 });
 
     cells.populate();
+
+    Font font = GetFontDefault();
+    std::string generation = "Generations: 0";
+    Vector2 generation_measurements = MeasureTextEx(font, generation.c_str(), 20, 1);
+
+    Vector2 pause_measurements = MeasureTextEx(font, "PAUSED", 20, 1);
+    Vector2 running_measurements = MeasureTextEx(font, "RUNNING", 20, 1);
 
     while (!WindowShouldClose())    
     {
@@ -80,6 +92,9 @@ int main(void)
 
                 data->generations++;
                 cells.advance_generation();
+
+                generation = std::format("Generations {}", data->generations);
+                generation_measurements = MeasureTextEx(font, generation.c_str(), 20, 1);
             }
         }
 
@@ -87,23 +102,17 @@ int main(void)
             ClearBackground(BLACK);
 
             BeginMode2D(game_camera);
-                cells.draw_alive();    
-                draw_grid();
+                cells.draw_alive();
+
+                if (data->show_grid)
+                    draw_grid();
             EndMode2D();
 
-            if (data->paused)
-            {
-                Vector2 measurements = MeasureTextEx(GetFontDefault(), "PAUSED", 20, 1);
-                DrawText("PAUSED", GetScreenWidth() - measurements.x - 10, 5, 20, RED);
-            }
-            else
-            {
-                Vector2 measurements = MeasureTextEx(GetFontDefault(), "RUNNING", 20, 1);
-                DrawText("RUNNING", GetScreenWidth() - measurements.x - 10, 5, 20, GREEN);
-            }
+            if (data->paused) DrawText("PAUSED", GetScreenWidth() - pause_measurements.x - 10, 5, 20, RED);
+            else DrawText("RUNNING", GetScreenWidth() - running_measurements.x - 10, 5, 20, GREEN);
 
             DrawText(cells.message.c_str(), 5, 5, 20, RAYWHITE);
-            DrawText(std::format("Generations {}", data->generations).c_str(), 5, 40, 20, RAYWHITE);
+            DrawText(generation.c_str(), GetScreenWidth() - generation_measurements.x - 18, 21, 20, RAYWHITE);
             DrawFPS(5, GetScreenHeight() - 20);
         EndDrawing();
     }

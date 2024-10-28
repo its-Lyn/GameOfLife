@@ -1,6 +1,8 @@
 #pragma once
 
 struct game_data {
+    bool show_grid;
+    
     bool paused;
     int generations;
 

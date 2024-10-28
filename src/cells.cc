@@ -63,6 +63,7 @@ void Cells::handle_mouse(Vector2 current)
 
 void Cells::handle(Vector2 current, Vector2 previous)
 {
+    // Mouse moved
     if (!Vector2Equals(current, previous)) this->handle_mouse(current);
 
     if (this->m_active != nullptr)
@@ -84,6 +85,7 @@ void Cells::handle(Vector2 current, Vector2 previous)
             }
 
             this->populate();
+            this->handle_mouse(current);
         }
     }
 }
