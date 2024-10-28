@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "definitions.hh"
-#include <cell.hh>
+#include "cell.hh"
 
 class Cells 
 {

@@ -1,11 +1,9 @@
-#include <cells.hh>
+#include "cells.hh"
 
 #include <raymath.h>
 
 #include <cmath>
-
 #include <iostream>
-
 #include <format>
 #include <string>
 
@@ -155,18 +153,14 @@ void Cells::advance_generation()
             switch (cells[x][y])
             {
                 case ALIVE:
-                    if (count < 2 || count > 3)
-                        temp_cells[x][y] = DEAD;
-                    else
-                        temp_cells[x][y] = ALIVE;
+                    if (count < 2 || count > 3) temp_cells[x][y] = DEAD;
+                    else temp_cells[x][y] = ALIVE;
 
                     break;
 
                 case DEAD:
-                    if (count == 3)
-                        temp_cells[x][y] = ALIVE;
-                    else
-                        temp_cells[x][y] = DEAD;
+                    if (count == 3) temp_cells[x][y] = ALIVE;
+                    else temp_cells[x][y] = DEAD;
 
                     break;
             }
