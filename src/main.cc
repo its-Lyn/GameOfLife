@@ -37,11 +37,11 @@ int main(void)
     data->generations = 0;
 
     Cells cells = Cells();
-    cells.alive.push_back((Vector2) { 29, 29});
-    cells.alive.push_back((Vector2) { 30, 30 });
-    cells.alive.push_back((Vector2) { 28, 31 });
-    cells.alive.push_back((Vector2) { 29, 31 });
-    cells.alive.push_back((Vector2) { 30, 31 });
+    cells.alive.push_back((Vector2) { 49, 49});
+    cells.alive.push_back((Vector2) { 50, 50 });
+    cells.alive.push_back((Vector2) { 48, 51 });
+    cells.alive.push_back((Vector2) { 49, 51 });
+    cells.alive.push_back((Vector2) { 50, 51 });
 
     cells.populate();
 
@@ -49,7 +49,7 @@ int main(void)
     {
         Vector2 mouse_screen = GetScreenToWorld2D(GetMousePosition(), game_camera);
 
-        if (IsKeyPressed(KEY_P)) data->paused = !data->paused;
+        if (IsKeyPressed(KEY_SPACE)) data->paused = !data->paused;
      
         // The camera will stay focused on the same point, even though the window is resized.
         game_camera.offset = (Vector2) { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2 }; 
