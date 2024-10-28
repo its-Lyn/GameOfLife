@@ -22,7 +22,7 @@ private:
     void set_cell(int x, int y, int state, std::unique_ptr<Cell>& cell);
 
 public:
-    std::string message = "";
+    std::string message;
 
     uint8_t cells[MAP_WIDTH][MAP_HEIGHT] = {};
     std::vector<Vector2> alive;
