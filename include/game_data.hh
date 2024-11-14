@@ -1,11 +1,12 @@
 #pragma once
 
-struct game_data {
-    bool show_grid;
-    
-    bool paused;
-    int generations;
+struct game_data
+{
+	bool show_grid = true;
 
-    float timer = 0;
-    float time_out = 0.1f;
+	bool paused = true;
+	int generations = 0;
+
+	float timer = 0;
+	float time_out = 0.1f;
 };
